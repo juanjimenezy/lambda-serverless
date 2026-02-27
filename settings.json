@@ -1,0 +1,27 @@
+{
+  "variables": {
+    "get": [],
+    "set": {
+      "DEV": {},
+      "QA": {
+        "NEQUI_ADDITIONAL_LOGGER_ENABLE": "true",
+        "NEQUI_LOGGER_ENABLE": "true",
+        "NAME_TABLE_NEQUI_PARAMS": "nequi-parameters-qa"
+      },
+      "PDN": {}
+    },
+    "deployDev": [],
+    "deploy": [
+      "NEQUI_ADDITIONAL_LOGGER_ENABLE",
+      "NEQUI_LOGGER_ENABLE",
+      "NAME_TABLE_NEQUI_PARAMS"
+    ],
+    "publish": [],
+    "both": []
+  },
+  "config": {
+    "timeout": 15,
+    "memorySize": 128,
+    "desc": "lambda taller serverless onboarding"
+  }
+}
