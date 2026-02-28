@@ -7,10 +7,8 @@ describe('lambda-serverless/index.js', () => {
 
   it('index.js: Success test', async () => {
     try {
-      let response = await lambdaTestUtils.test(index.handler, 'test/success.json');
+      let response = await lambdaTestUtils.test(index.handler, 'test/cases/successCase.json');
       expect(response).toBeDefined();
-
-      console.log('Response: ', JSON.stringify(response));
 
       const { ResponseMessage } = response;
       expect(ResponseMessage).toBeDefined();
@@ -20,9 +18,9 @@ describe('lambda-serverless/index.js', () => {
       const { Status } = ResponseMessage.ResponseHeader;
       expect(Status.StatusCode).toBe(RESPONSE_MESSAGES.SUCCESS.CODE);
 
-      expect(ResponseMessage.ResponseBody.any.testRS).toBeDefined();
-
       const { testRS } = ResponseMessage.ResponseBody.any;
+      expect(testRS).toBeDefined();
+
       expect(testRS).toEqual(
         jasmine.objectContaining({
           key: 'onboardingTest',
@@ -38,4 +36,23 @@ describe('lambda-serverless/index.js', () => {
       expect(error).not.toBeDefined();
     }
   });
+
+
+  it('index.js: Error NO DATA', async () => {
+    try {
+      const response = await lambdaTestUtils.test(index.handler, 'test/cases/noDataCase.json');
+      expect(response).toBeDefined();
+      
+      const { ResponseMessage } = response;
+      console.log('>>>ResponseMessage: ', ResponseMessage);
+      
+      
+    } catch (error) {
+      console.log('ERROR: ', error);
+      expect(error).not.toBeDefined();
+    }
+  });
+
+
+
 }); 
