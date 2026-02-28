@@ -2,4 +2,16 @@
 header lambda-serverless
 footer Página %page% of %lastpage%\nmade with ♥ by Nequi
 title Diagrama de Secuencia
+
+actor Cliente
+participant "AWS Lambda" as Handler
+participant "Business/Service" as Business
+database "DynamoDB\nNEQUI-PARAMETERS-QA" as Dynamo
+
+Cliente -> Handler: Invocar Lambda
+Handler -> Business: Procesar solicitud
+Business -> Dynamo: Consultar datos
+Dynamo --> Business: Resultado
+Business --> Handler: Respuesta
+Handler --> Cliente: Respuesta final
 @enduml

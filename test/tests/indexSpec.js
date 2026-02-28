@@ -18,9 +18,9 @@ describe('lambda-serverless/index.js', () => {
       const { Status } = ResponseMessage.ResponseHeader;
       expect(Status.StatusCode).toBe(RESPONSE_MESSAGES.SUCCESS.CODE);
 
-      const { testRS } = ResponseMessage.ResponseBody.any;
-      expect(testRS).toBeDefined();
+      expect(ResponseMessage.ResponseBody.any.testRS).toBeDefined();
 
+      const { testRS } = ResponseMessage.ResponseBody.any;
       expect(testRS).toEqual(
         jasmine.objectContaining({
           key: 'onboardingTest',
@@ -38,21 +38,48 @@ describe('lambda-serverless/index.js', () => {
   });
 
 
-  it('index.js: Error NO DATA', async () => {
+  it('index.js: bad parameters  test', async () => {
     try {
-      const response = await lambdaTestUtils.test(index.handler, 'test/cases/noDataCase.json');
+      let response = await lambdaTestUtils.test(index.handler, 'test/cases/badParamCase.json');
       expect(response).toBeDefined();
-      
+
       const { ResponseMessage } = response;
-      console.log('>>>ResponseMessage: ', ResponseMessage);
-      
-      
+      expect(ResponseMessage).toBeDefined();
+      expect(ResponseMessage.ResponseHeader).toBeDefined();
+      expect(ResponseMessage.ResponseBody).toBeDefined();
+
+      const { Status } = ResponseMessage.ResponseHeader;
+      expect(Status.StatusCode).toBe(RESPONSE_MESSAGES.BAD_PARAMETERS.CODE);
+     
+
+
     } catch (error) {
       console.log('ERROR: ', error);
       expect(error).not.toBeDefined();
     }
   });
 
+  it('index.js: no data found  test', async () => {
+    try {
+      let response = await lambdaTestUtils.test(index.handler, 'test/cases/noDataCase.json');
+      expect(response).toBeDefined();
 
+      console.log('Response: ', JSON.stringify(response));
+
+      const { ResponseMessage } = response;
+      expect(ResponseMessage).toBeDefined();
+      expect(ResponseMessage.ResponseHeader).toBeDefined();
+      expect(ResponseMessage.ResponseBody).toBeDefined();
+
+      const { Status } = ResponseMessage.ResponseHeader;
+      expect(Status.StatusCode).toBe(RESPONSE_MESSAGES.DATA_NOT_FOUND.CODE);
+     
+
+
+    } catch (error) {
+      console.log('ERROR: ', error);
+      expect(error).not.toBeDefined();
+    }
+  });
 
 }); 

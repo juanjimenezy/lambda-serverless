@@ -17,11 +17,16 @@ const service = async (event) => {
       throw lambdaUtils.buildOutput(true, false,
         getOutput(event, RESPONSE_MESSAGES.DATA_NOT_FOUND.CODE,
           RESPONSE_MESSAGES.DATA_NOT_FOUND.DESCRIPTION),
-        SERVICE_ERROR_LOG.name, SERVICE_ERROR_LOG.description)
+        "ERROR-DYNAMO", "ERROR OBTENIEDO DATA")
     }
     
     return data.Item;
   } catch (error) {
+
+    if (error && error.output) {
+      throw error;
+    }
+
     throw lambdaUtils.buildOutput(true, true,
       getOutput(event, RESPONSE_MESSAGES.TECHNICAL_ERROR.CODE,
         RESPONSE_MESSAGES.TECHNICAL_ERROR.DESCRIPTION),

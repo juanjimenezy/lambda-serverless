@@ -15,7 +15,7 @@
         "RequestBody": {
             "any": {
                 "testRQ": {
-                    "key": "NO_DATA"
+                    "key": "1234567890"
                 }
             }
         }

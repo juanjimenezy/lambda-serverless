@@ -11,7 +11,6 @@ module.exports = async function defaultHandler (event, context) {
   try {
     await validateSchema(event)
     const response = await processBusiness(event)
-    console.log('Response business ', JSON.stringify(response))
     return await lambdaUtils.finish(lambdaUtils.buildOutput(true, false,
       getOutput(event, RESPONSE_MESSAGES.SUCCESS.CODE,
         RESPONSE_MESSAGES.SUCCESS.DESCRIPTION, { testRS: response })
